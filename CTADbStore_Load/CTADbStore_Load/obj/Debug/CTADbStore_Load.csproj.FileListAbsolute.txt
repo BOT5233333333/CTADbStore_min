@@ -1,0 +1,7 @@
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\bin\Debug\CTADbStore_Load.exe.config
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\obj\Debug\CTADbStore_Load.csprojResolveAssemblyReference.cache
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\bin\Debug\CTADbStore_Load.exe
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\bin\Debug\CTADbStore_Load.pdb
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\bin\Debug\MySql.Data.dll
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\obj\Debug\CTADbStore_Load.exe
+E:\ProgramWorkSpace\GitLib\CTADbStore\CTADbStore_Load\CTADbStore_Load\obj\Debug\CTADbStore_Load.pdb

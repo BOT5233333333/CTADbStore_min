@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppHelper.cs" />
     <Compile Include="DBConnection.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />

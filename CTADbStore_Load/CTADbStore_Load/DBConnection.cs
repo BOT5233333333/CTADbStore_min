@@ -73,8 +73,7 @@ namespace CTADbStore_Load
 
                 con.Close();
                 Thread.Sleep(3000);
-                executeSqlNoPrm(excutSql);
-                return 0;
+                return ExecuteScalar(excutSql);
             }
             catch (Exception e)
             {
