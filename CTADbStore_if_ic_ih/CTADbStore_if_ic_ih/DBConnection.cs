@@ -21,7 +21,7 @@ namespace CTADbStore_if_ic_ih
         {
             this.connStr = connStr;
         }
-        internal void executeSqlNoPrm(string excutSql)
+        internal void ExecuteNonQuery(string excutSql)
         {
             MySqlConnection con = new MySqlConnection(this.connStr);
             if (excutSql == null || excutSql == "") { return; }
@@ -40,7 +40,7 @@ namespace CTADbStore_if_ic_ih
 
                 con.Close();
                 Thread.Sleep(3000);
-                executeSqlNoPrm(excutSql);
+                ExecuteNonQuery(excutSql);
 
             }
             catch (Exception e)
@@ -73,7 +73,7 @@ namespace CTADbStore_if_ic_ih
 
                 con.Close();
                 Thread.Sleep(3000);
-                executeSqlNoPrm(excutSql);
+                ExecuteNonQuery(excutSql);
                 return 0;
             }
             catch (Exception e)
