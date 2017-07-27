@@ -5,28 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace CTADbStore_Load
+namespace CTADbStore_if_ic_ih
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //路径必须不能带有中文字符
-            string rootPath = @"E:\test2";
+            string rootPath = @"G:\期货行情_导入";
             DirectoryInfo root = new DirectoryInfo(rootPath);
+
             AppHelper.numAllFiles = 0;
             foreach (var monthDir in root.GetDirectories())
             {
-                foreach(var dir in monthDir.GetDirectories())
+                foreach (var dir in monthDir.GetDirectories())
                 {
                     AppHelper.numAllFiles += dir.GetFiles().Length;
                 }
             }
-
-            SPTxtToSqlClass mainFunc = new SPTxtToSqlClass(rootPath, AppHelper.numAllFiles);
-            //SPTxtToSqlClass mainFunc = new SPTxtToSqlClass(rootPath, "STHisDBTick_deng", AppHelper.numAllFiles);
+            //SPTxtToSqlClass mainFunc = new SPTxtToSqlClass(rootPath, "CTAHisDBSPFT2016", AppHelper.numAllFiles);
+            SPTxtToSqlClass mainFunc = new SPTxtToSqlClass(rootPath, "ctatest_deng", AppHelper.numAllFiles);
             mainFunc.MainFunc();
         }
-
     }
 }
