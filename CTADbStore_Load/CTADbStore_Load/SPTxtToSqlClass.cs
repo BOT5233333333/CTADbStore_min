@@ -52,8 +52,8 @@ namespace CTADbStore_Load
                     foreach (var file in dir.GetFiles())
                     {
                         string tableName = "CTA_HSFT_" + file.Name.Substring(0, 11 + dir.Name.Count()).ToUpper() + "_TBL";
-                        //TableProcess(tableName, this.dbName);
-                        query = string.Format("LOAD DATA LOCAL INFILE '{0}' REPLACE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' ignore 1 lines "
+                        TableProcess(tableName, this.dbName);
+                        query = string.Format("LOAD DATA LOCAL INFILE '{0}' REPLACE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\n' "
                             + "(contractid,contractname,tdatetime,lastpx,highpx,lowpx ,cq,tq,lastqty,initopenints,openints,intschg "
                             + ",turnover ,riselimit,falllimit,presettle,preclose,s1,b1,sv1,bv1,openpx,closepx,settlementpx,@dummy,@dummy,@dummy,@dummy,@dummy,@dummy,mflxid,"
                             + "s5,s4,s3,s2,b2,b3,b4,b5,sv5,sv4,sv3,sv2,bv2,bv3,bv4,bv5,predelta,currdelta,@dummy,@dummy,chg,chgpct,@dummy,@dummy);"

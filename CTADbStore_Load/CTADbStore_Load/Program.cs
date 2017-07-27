@@ -11,7 +11,7 @@ namespace CTADbStore_Load
     {
         static void Main(string[] args)
         {
-            string rootPath = @"E:\期货行情_测试";
+            string rootPath = @"E:\test2";
             DirectoryInfo root = new DirectoryInfo(rootPath);
             AppHelper.numAllFiles = 0;
             foreach (var monthDir in root.GetDirectories())
