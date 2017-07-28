@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace CTADbStore_Load_if_ic_ih
+namespace CTADbStore_Load_t_tf
 {
     class Program
     {
         static void Main(string[] args)
         {
             //路径必须不能带有中文字符
-            string rootPath = @"G:\CTA";
+            string rootPath = @"E:\files";
             DirectoryInfo root = new DirectoryInfo(rootPath);
             AppHelper.numAllFiles = 0;
             foreach (var monthDir in root.GetDirectories())
             {
-                foreach (var dir in monthDir.GetDirectories().Where(d => (d.Name == "if" || d.Name == "ic" || d.Name == "ih") && d.GetFiles().Length > 0))
+                foreach (var dir in monthDir.GetDirectories().Where(d => (d.Name == "tf" || d.Name == "t" ) && d.GetFiles().Length > 0))
                 {
                     AppHelper.numAllFiles += dir.GetFiles().Length;
                 }

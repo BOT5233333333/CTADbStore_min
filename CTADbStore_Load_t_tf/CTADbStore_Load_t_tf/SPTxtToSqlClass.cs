@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CTADbStore_Load_if_ic_ih
+namespace CTADbStore_Load_t_tf
 {
     class SPTxtToSqlClass
     {
@@ -21,11 +21,13 @@ namespace CTADbStore_Load_if_ic_ih
         private string sqlOutPutPath = @"E:\sql_load.txt";
 
         //private string connStr = "Server=192.168.2.134;User ID=root;Password=123456;Database=ctatest_deng;CharSet=utf8";
-        private string connStr = "Server=192.168.2.181;User ID=root;Password=123456;Database=CTAHisDBSPFT;CharSet=utf8";
+        private string connStr = "Server=192.168.2.181;User ID=root;Password=123456;Database=CTAHisDBSPFT_tf;CharSet=utf8";
         public SPTxtToSqlClass(string rootPath, int numAllFiles)
         {
+            this.dbName = "CTAHisDBSPFT_tf";
+            //this.dbName = "ctatest_deng";
             this.rootPath = rootPath;
-            this.dbName = "CTAHisDBSPFT";
+            
             this.conn = new DBConnection(connStr);
             numFilesFinish = 0;
             this.numAllFiles = numAllFiles;
@@ -47,19 +49,16 @@ namespace CTADbStore_Load_if_ic_ih
                 Console.WriteLine("时间:" + DateTime.Now);
                 Console.WriteLine("*************");
                 foreach (var dir in monthDir.GetDirectories()
-                    .Where(d => (d.Name == "if" ||  d.Name == "ic" || d.Name == "ih") && d.GetFiles().Length > 0))
+                    .Where(d => (d.Name == "tf" ||  d.Name == "t" ) && d.GetFiles().Length > 0))
                 {
                     foreach (var file in dir.GetFiles())
                     {
                         string tableName = "CTA_HSFT_" + file.Name.Substring(0, 4 + dir.Name.Count()).ToUpper() + "_TBL";
                         TableProcess(tableName, this.dbName);
                         query = string.Format("LOAD DATA LOCAL INFILE '{0}' REPLACE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\n' "
-                            + "(IFCD, TDATE ,TTIME ,UPDATEMILLISEC ,CP , CHG , CHGPCT , CQ ,CM, OC , "
-                            + "S5 , S4 , S3 , S2 , S1, B1 , B2 , B3 , B4 , B5 ,"
-                            + "SV5 , SV4 , SV3 , SV2 , SV1 , BV1 , BV2 , BV3 , BV4 , BV5 , BS , BSRATIO ,"
-                            + "PRECLOSEPRC , OPENPRC , HP , LP , CLOSEPRC , UPPERLMTPRC , LOWERLMTPRC , "
-                            + "TQ , TM , PREOPNINTRST , OPNINTRST , PRESTLMTPRC , STLMTPRC , PREDELTA , DELTA ,"
-                            + "SETTLEGROUPID , SETTLEID , IFLXID , IFLXNAME, UNIX, MATKET);"
+                            + "(Symbol,Businestime,OpenPrice,Lastprice,Highprice,Lowprice,SettlePrice,PreSettle,ClosePrice,PreClose,Cq,Volume,Cm,Amount,PrePosition,Position,PositionChange,"
+                            +"LimitUp,LimitDown,Side,OC,B01,B02,B03,B04,B05,S01,S02,S03,S04,S05,BV01,BV02,BV03,BV04,BV05,SV01,SV02,SV03,SV04,SV05,CurrDelta,PreDelta,SettlementGroupID"
+                            +",SettlementID,`Change`,ChangeRatio,Continuesign,TradingDate,`LocalTime`,RecTime,ExchangeCode,ID,Unix);"
                                , file.FullName.Replace(@"\", @"\\")
                                , tableName);
                         querys.Add(query);
@@ -85,19 +84,18 @@ namespace CTADbStore_Load_if_ic_ih
             if (res == null)
             {
                 Console.WriteLine("创建表:" + tableName);
-                SqlCreateTbl = "CREATE TABLE " + tableName + "(recordID INT NOT NULL auto_increment,IFCD NVARCHAR(6),TDATE NVARCHAR(8),"
-                            + "TTIME NVARCHAR(6),UPDATEMILLISEC INT,CP DOUBLE, CHG DOUBLE, CHGPCT DOUBLE, CQ INT,CM DOUBLE, OC NVARCHAR(9), "
-                            +"S5 DOUBLE, S4 DOUBLE, S3 DOUBLE, S2 DOUBLE, S1 DOUBLE, B1 DOUBLE, B2 DOUBLE, B3 DOUBLE, B4 DOUBLE, B5 DOUBLE,"
-                            +"SV5 INT, SV4 INT, SV3 INT, SV2 INT, SV1 INT, BV1 INT, BV2 INT, BV3 INT, BV4 INT, BV5 INT, BS NVARCHAR(1), BSRATIO DOUBLE,"
-                            + "PRECLOSEPRC DOUBLE, OPENPRC DOUBLE, HP DOUBLE, LP DOUBLE, CLOSEPRC DOUBLE, UPPERLMTPRC DOUBLE, LOWERLMTPRC DOUBLE, "
-                            + "TQ INT, TM DOUBLE, PREOPNINTRST INT, OPNINTRST INT, PRESTLMTPRC DOUBLE, STLMTPRC DOUBLE, PREDELTA DOUBLE, DELTA DOUBLE,"
-                            + "SETTLEGROUPID NVARCHAR(9), SETTLEID INT, IFLXID NVARCHAR(6), IFLXNAME NVARCHAR(8), UNIX BIGINT, MATKET CHAR(5)"
-                            +", PRIMARY KEY (recordID)) ENGINE = InnoDB DEFAULT CHARSET = utf8; ";
+                SqlCreateTbl = "CREATE TABLE " + tableName + "(recordID INT NOT NULL auto_increment,Symbol VARCHAR(6), Businestime DATETIME(6)"
+                + ",OpenPrice DOUBLE, Lastprice DOUBLE, Highprice DOUBLE,Lowprice DOUBLE,SettlePrice DOUBLE,PreSettle DOUBLE,ClosePrice DOUBLE"
+                +",PreClose DOUBLE,Cq INT,Volume INT,Cm DOUBLE,Amount DOUBLE,PrePosition INT,Position INT,PositionChange INT,LimitUp DOUBLE"
+                + ",LimitDown DOUBLE,Side INT,OC INT,B01 DOUBLE,B02 DOUBLE,B03 DOUBLE,B04 DOUBLE,B05 DOUBLE,S01 DOUBLE,S02 DOUBLE,S03 DOUBLE,S04 DOUBLE,S05 DOUBLE"
+                + ",BV01 INT,BV02 INT,BV03 INT,BV04 INT,BV05 INT,SV01 INT,SV02 INT,SV03 INT,SV04 INT,SV05 INT,CurrDelta DOUBLE,PreDelta DOUBLE"
+                + ",SettlementGroupID INT,SettlementID INT,`Change` DOUBLE,ChangeRatio DOUBLE,Continuesign INT,TradingDate DATETIME,`LocalTime` DATETIME"
+                + ",RecTime DATETIME,ExchangeCode VARCHAR(5),ID INT,Unix BIGINT"
+                + ", PRIMARY KEY (recordID)) ENGINE = InnoDB DEFAULT CHARSET = utf8; ";
             }
 
             this.conn.ExecuteNonQuery(SqlCreateTbl);
         }
     }
-
 
 }
