@@ -12,7 +12,7 @@ namespace CTADbStore_Load_if_ic_ih
         static void Main(string[] args)
         {
             //路径必须不能带有中文字符
-            string rootPath = @"G:\CTA";
+            string rootPath = @"G:\CTA\2012";
             DirectoryInfo root = new DirectoryInfo(rootPath);
             AppHelper.numAllFiles = 0;
             foreach (var monthDir in root.GetDirectories())
